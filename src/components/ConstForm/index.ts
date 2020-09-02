@@ -1,1 +1,1 @@
-export { ConstForm } from "./ConstForm";
+export * from "./ConstForm";

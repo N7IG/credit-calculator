@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.scss";
 
-import { Main } from "./components";
+import { Main } from "./containers";
 
 function App() {
   return <Main />;
