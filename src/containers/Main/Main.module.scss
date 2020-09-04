@@ -2,3 +2,31 @@
   max-width: 800px;
   margin: auto;
 }
+
+.choosableFormsContainer,
+.resultsContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.choosableFormCard {
+  padding: 1rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+}
+
+Button {
+  width: 100%;
+}
+
+header {
+  height: 60px;
+  background: #272727;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  background-image: url("https://www.gastronom.ru/binfiles/images/20160829/b15df714.jpg");
+  box-shadow: inset 0px 0px 137px 55px rgba(0, 0, 0, 0.75);
+}
