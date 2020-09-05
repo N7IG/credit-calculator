@@ -60,7 +60,7 @@ export const Main = () => {
             sum,
             monthlyPayment,
             [{ interestRate, startMonth: 1 }]
-          ) as any;
+          );
 
           const calculateFromTermResult: number = calculateFromTerm(
             sum,
@@ -69,7 +69,7 @@ export const Main = () => {
           );
 
           setMonthNumberResult(months);
-          setOverpayment(overpayment.toFixed(2));
+          setOverpayment(round(overpayment, 2));
           setMonthlyPaymentResult(round(calculateFromTermResult, 2));
         }}
       >

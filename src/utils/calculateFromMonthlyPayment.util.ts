@@ -4,9 +4,9 @@ export function calculateFromMonthlyPayment(
   percentageArray: Array<{ interestRate: number; startMonth: number }>,
   detailed: boolean = false
 ): {
+  months: number;
+  overpayment: number;
   error?: string;
-  months?: number;
-  overpayment?: number;
 } {
   let i = 0;
   let overpayment = 0;
@@ -47,7 +47,7 @@ export function calculateFromMonthlyPayment(
   rec(sum);
 
   return i > maxyrs * 12
-    ? { error: "stack overflow" }
+    ? { error: "stack overflow", months: 0, overpayment: 0 }
     : {
         months: i,
         overpayment,
