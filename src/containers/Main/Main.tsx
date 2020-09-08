@@ -2,6 +2,7 @@ import round from "lodash/round";
 import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
+import NumberFormat from 'react-number-format';
 
 import { ConstForm, PaymentForm, TermForm } from "../../components";
 import { calculateFromMonthlyPayment, calculateFromTerm } from "../../utils";
@@ -78,15 +79,15 @@ export const Main = () => {
       <div className={classes.resultsContainer}>
         <div>
           Ежемесячный платёж:{" "}
-          <span style={{ fontWeight: "bold" }}>{monthlyPaymentResult}</span>.
+          <span ><NumberFormat value={monthlyPaymentResult} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>
           <br />
-          Срок выплат составит:
-          <span style={{ fontWeight: "bold" }}> {monthNumberResult}</span>{" "}
-          месяцев.
+          Срок выплат составит:{" "}
+          <span ><NumberFormat value={monthNumberResult} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>{" "}
+          месяцев
         </div>
         <div>
-          Переплата составит:
-          <span style={{ fontWeight: "bold" }}> {overpayment}</span>.
+          Переплата составит:{" "}
+          <span ><NumberFormat value={overpayment} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>
         </div>
       </div>
     </div>
