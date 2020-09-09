@@ -18,7 +18,7 @@ import {
 import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
 import classes from "./App.module.scss";
 
-import { DiffTableRawContent } from "../../models/index";
+import { DiffTableRawContent, PaymentType } from "../../models/index";
 
 export const App = () => {
   const [sum, setSum] = useState<number>(0);
@@ -28,7 +28,9 @@ export const App = () => {
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
   const [term, setTerm] = useState<number>(0);
   const [monthlyPaymentResult, setMonthlyPaymentResult] = useState<number>(0);
-  const [paymentType, setPaymentType] = useState<string>("annuity");
+  const [paymentType, setPaymentType] = useState<PaymentType>(
+    PaymentType.Annuity
+  );
   const [diffPaymentTypeResult, setDiffPaymentResult] = useState<
     Array<DiffTableRawContent>
   >([]);
@@ -77,11 +79,12 @@ export const App = () => {
         color="primary"
         variant="outlined"
         onClick={() => {
-          if (paymentType === "annuity") {
+          if (paymentType === PaymentType.Annuity) {
             const { months, overpayment } = calculateFromMonthlyPayment(
               sum,
               monthlyPayment,
-              [{ interestRate, startMonth: 1 }]
+              [{ interestRate, startMonth: 1 }],
+              true
             );
 
             const calculateFromTermResult: number = calculateFromTerm(
@@ -107,7 +110,7 @@ export const App = () => {
       >
         Рассчитать
       </Button>
-      {paymentType === "annuity" ? (
+      {paymentType === PaymentType.Annuity ? (
         <AnnuityResult
           data={{
             monthlyPaymentResult,

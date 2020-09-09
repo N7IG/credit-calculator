@@ -4,6 +4,7 @@ import NumberFormat from "react-number-format";
 
 import { DISPLAY_NAMES_RUS } from "./display-names";
 import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { PaymentType } from "../../models";
 
 interface TermFormProps {
   handleTermChange: Function;
@@ -31,18 +32,18 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
     />
     <RadioGroup
       aria-label="payment_type"
-      defaultValue="annuity"
+      defaultValue={PaymentType.Annuity}
       onChange={(event) => {
         handlePaymentTypeChange(event.target.value);
       }}
     >
       <FormControlLabel
-        value="annuity"
+        value={PaymentType.Annuity}
         control={<Radio />}
         label={DISPLAY_NAMES_RUS.ANNUITY_RADIO}
       />
       <FormControlLabel
-        value="differential"
+        value={PaymentType.Differential}
         control={<Radio />}
         label={DISPLAY_NAMES_RUS.DIFF_RADIO}
       />
