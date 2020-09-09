@@ -16,11 +16,11 @@ import {
   calculateDiffPayments,
 } from "../../utils";
 import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
-import classes from "./Main.module.scss";
+import classes from "./App.module.scss";
 
 import { DiffTableRawContent } from "../../models/index";
 
-export const Main = () => {
+export const App = () => {
   const [sum, setSum] = useState<number>(0);
   const [monthNumberResult, setMonthNumberResult] = useState<number>(0);
   const [overpayment, setOverpayment] = useState<number>(0);
@@ -54,7 +54,7 @@ export const Main = () => {
   };
 
   return (
-    <div className={classes.main}>
+    <div className={classes.app}>
       <header>{DISPLAY_NAMES_RUS.APP_NAME}</header>
       <ConstForm
         handleSumChange={handleSumChange}

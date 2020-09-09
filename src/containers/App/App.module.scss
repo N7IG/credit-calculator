@@ -1,6 +1,7 @@
-.main {
+.app {
   max-width: 800px;
   margin: auto;
+  padding: 0 1rem;
 }
 
 .choosableFormsContainer,
@@ -27,6 +28,7 @@ header {
   font-weight: bold;
   color: white;
   padding: 10px;
-  background-image: url("https://www.gastronom.ru/binfiles/images/20160829/b15df714.jpg");
-  box-shadow: inset 0px 0px 137px 55px rgba(0, 0, 0, 0.75);
+  background-size: cover;
+  background-image: url("https://cdn7.dissolve.com/p/D943_47_411/D943_47_411_1200.jpg");
+  box-shadow: inset 104px 0px 92px 17px black;
 }
