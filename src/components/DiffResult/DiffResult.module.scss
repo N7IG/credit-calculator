@@ -1,3 +1,14 @@
-.resultsContainer {
+.tableContainer {
   margin: 1rem auto;
+}
+
+.basicResultContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+thead {
+  background-color: #e8e8e8;
 }
