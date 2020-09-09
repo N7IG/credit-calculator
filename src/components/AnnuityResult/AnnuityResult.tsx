@@ -21,7 +21,8 @@ export function AnnuityResult(props: AnnuityDataPropsResult) {
             style={{ fontWeight: "bold" }}
           />
         </span>
-        <br />
+      </div>
+      <div>
         {DISPLAY_NAMES_RUS.CALCULATED_PAYMENT_PERIOD}:{" "}
         <span>
           <NumberFormat
@@ -33,8 +34,7 @@ export function AnnuityResult(props: AnnuityDataPropsResult) {
           />
         </span>{" "}
         {DISPLAY_NAMES_RUS.MONTHS}
-      </div>
-      <div>
+        <br />
         {DISPLAY_NAMES_RUS.CALCULATED_OVERPAYMENT}:{" "}
         <span>
           <NumberFormat

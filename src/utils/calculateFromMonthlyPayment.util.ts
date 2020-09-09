@@ -8,6 +8,7 @@ export function calculateFromMonthlyPayment(
   overpayment: number;
   error?: string;
 } {
+  const THRESHOLD: number = 1;
   let i = 0;
   let overpayment = 0;
   let descendPercArray = percentageArray.sort(
@@ -23,14 +24,15 @@ export function calculateFromMonthlyPayment(
   }
 
   function rec(sum: number) {
-    i++;
-    let yearPercent = getYearPercent(i);
-    let percentPayment = (sum * yearPercent) / 12 / 100;
-    let debtPayment = moPayment - percentPayment;
-    if (sum > 0) {
+    if (sum > 0 + THRESHOLD) {
+      i++;
+      let yearPercent = getYearPercent(i);
+      let percentPayment = (sum * yearPercent) / 12 / 100;
+      let debtPayment = Math.min(moPayment - percentPayment, sum);
       overpayment += percentPayment;
 
       if (detailed) {
+        console.group(`month ${i}:`);
         console.log("year percent:", yearPercent);
         console.log("percentPayment:", percentPayment);
         console.log("debt payment:", debtPayment);
