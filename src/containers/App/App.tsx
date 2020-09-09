@@ -51,7 +51,7 @@ export const App = () => {
     setTerm(Number(value));
   };
 
-  const handlePaymentTypeChange = (value: string) => {
+  const handlePaymentTypeChange = (value: PaymentType) => {
     setPaymentType(value);
   };
 
