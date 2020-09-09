@@ -42,6 +42,5 @@ export function calculateDiffPayments(
     }
   }
 
-  console.log(finalResult);
   return finalResult;
 }
