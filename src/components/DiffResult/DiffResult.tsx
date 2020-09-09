@@ -10,23 +10,32 @@ import Paper from "@material-ui/core/Paper";
 import NumberFormat from "react-number-format";
 
 import classes from "./DiffResult.module.scss";
+import {
+  DiffTableResultContent,
+  DiffTableRawContent,
+} from "../../models/DiffResult.model";
+import { DISPLAY_NAMES_RUS } from "./display-names";
 
-export function DiffResult(props: any) {
+export function DiffResult(props: DiffTableResultContent) {
   return (
     <div className={classes.resultsContainer}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>№ Платежа</TableCell>
-              <TableCell>Оплата за период</TableCell>
-              <TableCell>Основной долг</TableCell>
-              <TableCell>Начисленные проценты</TableCell>
-              <TableCell>Сумма платежа</TableCell>
+              <TableCell>{DISPLAY_NAMES_RUS.ORDER_PAYMENT_NUMBER}</TableCell>
+              <TableCell>{DISPLAY_NAMES_RUS.PEYMENT_FOR_PERIOD}</TableCell>
+              <TableCell>
+                {DISPLAY_NAMES_RUS.BASIC_DEBT_PERIOD_PAYMENT}
+              </TableCell>
+              <TableCell>
+                {DISPLAY_NAMES_RUS.PERCENTAGE_PERIOD_PAYMENT}
+              </TableCell>
+              <TableCell>{DISPLAY_NAMES_RUS.TOTAL_PERIOD_PAYMENT}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.data.map((row: any, index: number) => (
+            {props.data.map((row: DiffTableRawContent, index: number) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
                   {index + 1}

@@ -1,15 +1,17 @@
+import { DiffTableRawContent } from "../models/index";
+
 export function calculateDiffPayments(
   sum: number,
   monthsToPay: number,
   percentage: number,
   monthsArray: string[]
-): Array<any> {
-  const finalResult = [];
-  let totalBasicDept = sum;
-  const basicDebtPeymentPerMonth = sum / monthsToPay;
-  const currentDay = new Date();
-  let currentMonth = currentDay.getMonth();
-  let currentYear = currentDay.getFullYear();
+): Array<DiffTableRawContent> {
+  const finalResult: Array<DiffTableRawContent> = [];
+  let totalBasicDept: number = sum;
+  const basicDebtPeymentPerMonth: number = sum / monthsToPay;
+  const currentDay: Date = new Date();
+  let currentMonth: number = currentDay.getMonth();
+  let currentYear: number = currentDay.getFullYear();
 
   for (let i = 0; i < monthsToPay; i++) {
     let daysInCurrentMonth = new Date(

@@ -4,11 +4,14 @@ import NumberFormat from "react-number-format";
 
 import classes from "./AnnuityResult.module.scss";
 
-export function AnnuityResult(props: any) {
+import { AnnuityDataPropsResult } from "../../models/index";
+import { DISPLAY_NAMES_RUS } from "./display-names";
+
+export function AnnuityResult(props: AnnuityDataPropsResult) {
   return (
     <div className={classes.resultsContainer}>
       <div>
-        Ежемесячный платёж:{" "}
+        {DISPLAY_NAMES_RUS.MONTH_PAYMENT}:{" "}
         <span>
           <NumberFormat
             value={props.data.monthlyPaymentResult}
@@ -19,7 +22,7 @@ export function AnnuityResult(props: any) {
           />
         </span>
         <br />
-        Срок выплат составит:{" "}
+        {DISPLAY_NAMES_RUS.CALCULATED_PAYMENT_PERIOD}:{" "}
         <span>
           <NumberFormat
             value={props.data.monthNumberResult}
@@ -29,10 +32,10 @@ export function AnnuityResult(props: any) {
             style={{ fontWeight: "bold" }}
           />
         </span>{" "}
-        месяцев
+        {DISPLAY_NAMES_RUS.MONTHS}
       </div>
       <div>
-        Переплата составит:{" "}
+        {DISPLAY_NAMES_RUS.CALCULATED_OVERPAYMENT}:{" "}
         <span>
           <NumberFormat
             value={props.data.overpayment}

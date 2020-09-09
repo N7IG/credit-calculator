@@ -18,6 +18,8 @@ import {
 import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
 import classes from "./Main.module.scss";
 
+import { DiffTableRawContent } from "../../models/index";
+
 export const Main = () => {
   const [sum, setSum] = useState<number>(0);
   const [monthNumberResult, setMonthNumberResult] = useState<number>(0);
@@ -27,9 +29,9 @@ export const Main = () => {
   const [term, setTerm] = useState<number>(0);
   const [monthlyPaymentResult, setMonthlyPaymentResult] = useState<number>(0);
   const [paymentType, setPaymentType] = useState<string>("annuity");
-  const [diffPaymentTypeResult, setDiffPaymentResult] = useState<Array<any>>(
-    []
-  );
+  const [diffPaymentTypeResult, setDiffPaymentResult] = useState<
+    Array<DiffTableRawContent>
+  >([]);
 
   const handleSumChange = (value: string) => {
     setSum(Number(value));
@@ -94,14 +96,14 @@ export const Main = () => {
             setOverpayment(round(overpayment, 2));
             setMonthlyPaymentResult(round(calculateFromTermResult, 2));
           } else {
-            const calculateDiffPaymentTypeResult: Array<any> = calculateDiffPayments(
+            const calculatedDiffPaymentTypeResult: Array<DiffTableRawContent> = calculateDiffPayments(
               sum,
               term,
               interestRate,
               DISPLAY_MONTHS_NAMES_RUS
             );
 
-            setDiffPaymentResult(calculateDiffPaymentTypeResult);
+            setDiffPaymentResult(calculatedDiffPaymentTypeResult);
           }
         }}
       >
