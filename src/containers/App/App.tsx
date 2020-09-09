@@ -60,7 +60,6 @@ export const App = () => {
         handleSumChange={handleSumChange}
         handleInterestRateChange={handleInterestRateChange}
       />
-      <hr />
       <div className={classes.choosableFormsContainer}>
         <div className={classes.choosableFormCard}>
           <TermForm
@@ -74,7 +73,6 @@ export const App = () => {
           />
         </div>
       </div>
-      <hr />
       <Button
         color="primary"
         variant="outlined"
