@@ -2,11 +2,20 @@ import round from "lodash/round";
 import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
-import NumberFormat from 'react-number-format';
 
-import { ConstForm, PaymentForm, TermForm } from "../../components";
-import { calculateFromMonthlyPayment, calculateFromTerm } from "../../utils";
-import { DISPLAY_NAMES_RUS } from "./display-names";
+import {
+  ConstForm,
+  PaymentForm,
+  TermForm,
+  AnnuityResult,
+  DiffResult,
+} from "../../components";
+import {
+  calculateFromMonthlyPayment,
+  calculateFromTerm,
+  calculateDiffPayments,
+} from "../../utils";
+import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
 import classes from "./Main.module.scss";
 
 export const Main = () => {
@@ -17,6 +26,10 @@ export const Main = () => {
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
   const [term, setTerm] = useState<number>(0);
   const [monthlyPaymentResult, setMonthlyPaymentResult] = useState<number>(0);
+  const [paymentType, setPaymentType] = useState<string>("annuity");
+  const [diffPaymentTypeResult, setDiffPaymentResult] = useState<Array<any>>(
+    []
+  );
 
   const handleSumChange = (value: string) => {
     setSum(Number(value));
@@ -34,6 +47,10 @@ export const Main = () => {
     setTerm(Number(value));
   };
 
+  const handlePaymentTypeChange = (value: string) => {
+    setPaymentType(value);
+  };
+
   return (
     <div className={classes.main}>
       <header>{DISPLAY_NAMES_RUS.APP_NAME}</header>
@@ -44,7 +61,10 @@ export const Main = () => {
       <hr />
       <div className={classes.choosableFormsContainer}>
         <div className={classes.choosableFormCard}>
-          <TermForm handleTermChange={handleTermChange} />
+          <TermForm
+            handleTermChange={handleTermChange}
+            handlePaymentTypeChange={handlePaymentTypeChange}
+          />
         </div>
         <div className={classes.choosableFormCard}>
           <PaymentForm
@@ -57,39 +77,49 @@ export const Main = () => {
         color="primary"
         variant="outlined"
         onClick={() => {
-          const { months, overpayment } = calculateFromMonthlyPayment(
-            sum,
-            monthlyPayment,
-            [{ interestRate, startMonth: 1 }]
-          );
+          if (paymentType === "annuity") {
+            const { months, overpayment } = calculateFromMonthlyPayment(
+              sum,
+              monthlyPayment,
+              [{ interestRate, startMonth: 1 }]
+            );
 
-          const calculateFromTermResult: number = calculateFromTerm(
-            sum,
-            interestRate,
-            term
-          );
+            const calculateFromTermResult: number = calculateFromTerm(
+              sum,
+              interestRate,
+              term
+            );
 
-          setMonthNumberResult(months);
-          setOverpayment(round(overpayment, 2));
-          setMonthlyPaymentResult(round(calculateFromTermResult, 2));
+            setMonthNumberResult(months);
+            setOverpayment(round(overpayment, 2));
+            setMonthlyPaymentResult(round(calculateFromTermResult, 2));
+          } else {
+            const calculateDiffPaymentTypeResult: Array<any> = calculateDiffPayments(
+              sum,
+              term,
+              interestRate,
+              DISPLAY_MONTHS_NAMES_RUS
+            );
+
+            setDiffPaymentResult(calculateDiffPaymentTypeResult);
+          }
         }}
       >
         Рассчитать
       </Button>
-      <div className={classes.resultsContainer}>
-        <div>
-          Ежемесячный платёж:{" "}
-          <span ><NumberFormat value={monthlyPaymentResult} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>
-          <br />
-          Срок выплат составит:{" "}
-          <span ><NumberFormat value={monthNumberResult} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>{" "}
-          месяцев
-        </div>
-        <div>
-          Переплата составит:{" "}
-          <span ><NumberFormat value={overpayment} thousandSeparator={" "} displayType={'text'} style={{ fontWeight: "bold" }} /></span>
-        </div>
-      </div>
+      {paymentType === "annuity" ? (
+        <AnnuityResult
+          data={{
+            monthlyPaymentResult,
+            monthNumberResult,
+            overpayment,
+          }}
+        />
+      ) : diffPaymentTypeResult.length ? (
+        <DiffResult data={diffPaymentTypeResult} />
+      ) : (
+        " "
+      )}
     </div>
   );
 };
