@@ -17,7 +17,6 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
   <div>
     <NumberFormat
       customInput={TextField}
-      id="outlined-full-width"
       label={DISPLAY_NAMES_RUS.TERM_LABEL}
       fullWidth
       margin="normal"
