@@ -68,6 +68,15 @@ export const App = () => {
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newTab: string) => {
     setSelectedTab(newTab);
+    setSum(0);
+    setInterestRate(0);
+    setMonthlyPayment(0);
+    setTerm(0);
+    setPaymentType(PaymentType.Annuity);
+    setDiffPaymentResult([]);
+    setMonthlyPaymentResult(0);
+    setMonthNumberResult(0);
+    setOverpayment(0);
   };
 
   return (
