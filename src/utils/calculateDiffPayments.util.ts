@@ -18,7 +18,7 @@ export function calculateDiffPayments(
     paymentAmount: 0,
     amountOfDebt: 0,
     amountOfPercentage: 0,
-    leftDrbtAmount: totalBasicDept,
+    leftDebtAmount: totalBasicDept,
   });
 
   currentMonth++;
@@ -45,7 +45,7 @@ export function calculateDiffPayments(
         Math.round((basicDebtPeymentPerMonth + Number.EPSILON) * 100) / 100,
       amountOfPercentage:
         Math.round((percentagePayment + Number.EPSILON) * 100) / 100,
-      leftDrbtAmount: totalBasicDept,
+      leftDebtAmount: totalBasicDept,
     });
 
     currentMonth++;

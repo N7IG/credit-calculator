@@ -126,7 +126,7 @@ export function DiffResult(props: DiffTableResultContent) {
                     <TableCell>
                       {
                         <NumberFormat
-                          value={row.leftDrbtAmount}
+                          value={row.leftDebtAmount}
                           thousandSeparator={" "}
                           decimalScale={2}
                           displayType={"text"}
@@ -190,7 +190,7 @@ export function DiffResult(props: DiffTableResultContent) {
                   {
                     <b>
                       <NumberFormat
-                        value={props.data.slice(-1)[0].leftDrbtAmount}
+                        value={props.data.slice(-1)[0].leftDebtAmount}
                         thousandSeparator={" "}
                         decimalScale={2}
                         displayType={"text"}
