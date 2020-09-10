@@ -1,6 +1,6 @@
 export const DISPLAY_NAMES_RUS = {
   APP_NAME: "Кредитный калькулятор",
-  BY_CREDIT_AMOUNT: "По сумме кредита",
+  BY_PAYMENT_PERIOD: "По сроку кредита",
   BY_PAYMENT_AMMOUT: "По сумме платежа",
 };
 export const DISPLAY_MONTHS_NAMES_RUS = [

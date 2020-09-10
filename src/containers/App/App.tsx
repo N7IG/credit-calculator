@@ -43,7 +43,7 @@ export const App = () => {
   >([]);
 
   const [selectedTab, setSelectedTab] = React.useState(
-    DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT
+    DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD
   );
 
   const handleSumChange = (value: string) => {
@@ -97,8 +97,8 @@ export const App = () => {
               indicatorColor="primary"
             >
               <Tab
-                label={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}
-                value={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}
+                label={DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD}
+                value={DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD}
               />
               <Tab
                 label={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}
@@ -106,7 +106,7 @@ export const App = () => {
               />
             </TabList>
           </AppBar>
-          <TabPanel value={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}>
+          <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD}>
             <ConstForm
               handleSumChange={handleSumChange}
               handleInterestRateChange={handleInterestRateChange}
@@ -132,7 +132,7 @@ export const App = () => {
           color="primary"
           variant="outlined"
           onClick={() => {
-            if (selectedTab === DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT) {
+            if (selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD) {
               if (paymentType === PaymentType.Annuity) {
                 const calculateFromTermResult: number = calculateFromTerm(
                   sum,
@@ -168,7 +168,7 @@ export const App = () => {
         </Button>
       </section>
       <section>
-        {selectedTab === DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT ? (
+        {selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD ? (
           paymentType === PaymentType.Annuity ? (
             <AnnuityResult
               data={{
