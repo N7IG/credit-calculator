@@ -1,4 +1,6 @@
 export const DISPLAY_NAMES_RUS = {
-  MONTH_PAYMENT: "Ежемесячный платёж",
   CALCULATION_RESULT: "Результат расчета",
+  MONTH_PAYMENT: "Ежемесячный платёж с",
+  YEAR: "года",
+  NUMERIC_POSTFIX: "-го",
 };

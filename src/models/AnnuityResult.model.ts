@@ -1,3 +1,3 @@
 export interface AnnuityDataPropsResult {
-  data: { monthlyPaymentResult: number };
+  data: { monthlyPaymentResult: Array<number> };
 }

@@ -1,7 +1,10 @@
+import { InterestRate } from "../models";
+import { getYearInterestRate } from "./getYearInterestRate.util";
+
 export function calculateFromMonthlyPayment(
   sum: number,
   moPayment: number,
-  percentageArray: Array<{ interestRate: number; startMonth: number }>,
+  interestRates: Array<InterestRate>,
   detailed: boolean = false
 ): {
   months: number;
@@ -11,22 +14,12 @@ export function calculateFromMonthlyPayment(
   const THRESHOLD: number = 1;
   let i = 0;
   let overpayment = 0;
-  let descendPercArray = percentageArray.sort(
-    (a, b) => b.startMonth - a.startMonth
-  );
   const maxyrs = 200;
-
-  function getYearPercent(month: number) {
-    let index = descendPercArray
-      .map((el) => el.startMonth)
-      .findIndex((el) => el < month + 1);
-    return descendPercArray[index].interestRate;
-  }
 
   function rec(sum: number) {
     if (sum > 0 + THRESHOLD) {
       i++;
-      let yearPercent = getYearPercent(i);
+      let yearPercent = getYearInterestRate(i, interestRates);
       let percentPayment = (sum * yearPercent) / 12 / 100;
       let debtPayment = Math.min(moPayment - percentPayment, sum);
       overpayment += percentPayment;

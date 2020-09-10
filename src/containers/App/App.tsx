@@ -1,40 +1,45 @@
 import round from "lodash/round";
 import React, { useState } from "react";
+
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import Tab from "@material-ui/core/Tab";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-
-import Button from "@material-ui/core/Button";
 
 import {
+  AnnuityResult,
   ConstForm,
+  DiffResult,
   PaymentForm,
   TermForm,
-  AnnuityResult,
-  DiffResult,
 } from "../../components";
-import {
-  calculateFromMonthlyPayment,
-  calculateFromTerm,
-  calculateDiffPayments,
-} from "../../utils";
-import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
-import classes from "./App.module.scss";
-
-import { DiffTableRawContent, PaymentType } from "../../models/index";
 import { ByPaymentResult } from "../../components/ByPaymentResult";
+import {
+  DiffTableRawContent,
+  InterestRate,
+  PaymentType,
+} from "../../models/index";
+import {
+  calculateDiffPayments,
+  calculateFromMonthlyPayment,
+} from "../../utils";
+import { calculateFromTermAdvanced } from "../../utils/calculateFromTermAdvanced.util";
+import classes from "./App.module.scss";
+import { DISPLAY_MONTHS_NAMES_RUS, DISPLAY_NAMES_RUS } from "./display-names";
 
 export const App = () => {
   const [sum, setSum] = useState<number>(0);
   const [monthNumberResult, setMonthNumberResult] = useState<number>(0);
   const [overpayment, setOverpayment] = useState<number>(0);
-  const [interestRate, setInterestRate] = useState<number>(0);
+  const [interestRates, setInterestRates] = useState<InterestRate[]>([]);
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
   const [term, setTerm] = useState<number>(0);
-  const [monthlyPaymentResult, setMonthlyPaymentResult] = useState<number>(0);
+  const [monthlyPaymentResult, setMonthlyPaymentResult] = useState<
+    Array<number>
+  >([]);
   const [paymentType, setPaymentType] = useState<PaymentType>(
     PaymentType.Annuity
   );
@@ -50,8 +55,10 @@ export const App = () => {
     setSum(Number(value));
   };
 
-  const handleInterestRateChange = (value: string) => {
-    setInterestRate(Number(value));
+  const handleInterestRateChange = (value: InterestRate[]) => {
+    console.log("HIC", value);
+
+    setInterestRates(value);
   };
 
   const handleMonthlyPaymentChange = (value: string) => {
@@ -67,15 +74,16 @@ export const App = () => {
     setShowResults(false);
   };
 
+  // TODO: wtf. why is it repeating
   const handleTabChange = (event: React.ChangeEvent<{}>, newTab: string) => {
     setSelectedTab(newTab);
     setSum(0);
-    setInterestRate(0);
+    setInterestRates([]);
     setMonthlyPayment(0);
     setTerm(0);
     setPaymentType(PaymentType.Annuity);
     setDiffPaymentResult([]);
-    setMonthlyPaymentResult(0);
+    setMonthlyPaymentResult([]);
     setMonthNumberResult(0);
     setOverpayment(0);
     setShowResults(false);
@@ -137,18 +145,22 @@ export const App = () => {
             setShowResults(true);
             if (selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD) {
               if (paymentType === PaymentType.Annuity) {
-                const calculateFromTermResult: number = calculateFromTerm(
+                const calculateFromTermResult: number[] = calculateFromTermAdvanced(
                   sum,
-                  interestRate,
+                  interestRates,
                   term
                 );
 
-                setMonthlyPaymentResult(round(calculateFromTermResult, 2));
+                console.log("MPR", calculateFromTermResult);
+
+                setMonthlyPaymentResult(
+                  calculateFromTermResult.map((payment) => round(payment, 2))
+                );
               } else {
                 const calculatedDiffPaymentTypeResult: Array<DiffTableRawContent> = calculateDiffPayments(
                   sum,
                   term,
-                  interestRate,
+                  interestRates,
                   DISPLAY_MONTHS_NAMES_RUS
                 );
 
@@ -158,7 +170,7 @@ export const App = () => {
               const { months, overpayment } = calculateFromMonthlyPayment(
                 sum,
                 monthlyPayment,
-                [{ interestRate, startMonth: 1 }],
+                interestRates,
                 true
               );
 
