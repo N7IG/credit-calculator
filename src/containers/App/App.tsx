@@ -1,5 +1,11 @@
 import round from "lodash/round";
 import React, { useState } from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Tab from "@material-ui/core/Tab";
+import TabContext from "@material-ui/lab/TabContext";
+import TabList from "@material-ui/lab/TabList";
+import TabPanel from "@material-ui/lab/TabPanel";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 
 import Button from "@material-ui/core/Button";
 
@@ -19,6 +25,7 @@ import { DISPLAY_NAMES_RUS, DISPLAY_MONTHS_NAMES_RUS } from "./display-names";
 import classes from "./App.module.scss";
 
 import { DiffTableRawContent, PaymentType } from "../../models/index";
+import { ByPaymentResult } from "../../components/ByPaymentResult";
 
 export const App = () => {
   const [sum, setSum] = useState<number>(0);
@@ -34,6 +41,10 @@ export const App = () => {
   const [diffPaymentTypeResult, setDiffPaymentResult] = useState<
     Array<DiffTableRawContent>
   >([]);
+
+  const [selectedTab, setSelectedTab] = React.useState(
+    DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT
+  );
 
   const handleSumChange = (value: string) => {
     setSum(Number(value));
@@ -55,74 +66,120 @@ export const App = () => {
     setPaymentType(value);
   };
 
+  const handleTabChange = (event: React.ChangeEvent<{}>, newTab: string) => {
+    setSelectedTab(newTab);
+  };
+
   return (
     <div className={classes.app}>
-      <header>{DISPLAY_NAMES_RUS.APP_NAME}</header>
-      <ConstForm
-        handleSumChange={handleSumChange}
-        handleInterestRateChange={handleInterestRateChange}
-      />
-      <div className={classes.choosableFormsContainer}>
-        <div className={classes.choosableFormCard}>
-          <TermForm
-            handleTermChange={handleTermChange}
-            handlePaymentTypeChange={handlePaymentTypeChange}
-          />
+      <section className={classes.header}>
+        <div className={classes.dollarIcon}>
+          <AttachMoneyIcon />
         </div>
-        <div className={classes.choosableFormCard}>
-          <PaymentForm
-            handleMonthlyPaymentChange={handleMonthlyPaymentChange}
-          />
-        </div>
-      </div>
-      <Button
-        color="primary"
-        variant="outlined"
-        onClick={() => {
-          if (paymentType === PaymentType.Annuity) {
-            const { months, overpayment } = calculateFromMonthlyPayment(
-              sum,
-              monthlyPayment,
-              [{ interestRate, startMonth: 1 }],
-              true
-            );
+        <h1>{DISPLAY_NAMES_RUS.APP_NAME}</h1>
+      </section>
+      <section className={classes.form}>
+        <TabContext value={selectedTab}>
+          <AppBar position="static">
+            <TabList
+              className={classes.tabHeader}
+              onChange={handleTabChange}
+              aria-label="tabs"
+              indicatorColor="primary"
+            >
+              <Tab
+                label={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}
+                value={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}
+              />
+              <Tab
+                label={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}
+                value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}
+              />
+            </TabList>
+          </AppBar>
+          <TabPanel value={DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT}>
+            <ConstForm
+              handleSumChange={handleSumChange}
+              handleInterestRateChange={handleInterestRateChange}
+            />
+            <TermForm
+              handleTermChange={handleTermChange}
+              handlePaymentTypeChange={handlePaymentTypeChange}
+            />
+          </TabPanel>
+          <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}>
+            <ConstForm
+              handleSumChange={handleSumChange}
+              handleInterestRateChange={handleInterestRateChange}
+            />
+            <PaymentForm
+              handleMonthlyPaymentChange={handleMonthlyPaymentChange}
+            />
+          </TabPanel>
+        </TabContext>
+        <hr />
+        <Button
+          className={classes.resultButton}
+          color="primary"
+          variant="outlined"
+          onClick={() => {
+            if (selectedTab === DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT) {
+              if (paymentType === PaymentType.Annuity) {
+                const calculateFromTermResult: number = calculateFromTerm(
+                  sum,
+                  interestRate,
+                  term
+                );
 
-            const calculateFromTermResult: number = calculateFromTerm(
-              sum,
-              interestRate,
-              term
-            );
+                setMonthlyPaymentResult(round(calculateFromTermResult, 2));
+              } else {
+                const calculatedDiffPaymentTypeResult: Array<DiffTableRawContent> = calculateDiffPayments(
+                  sum,
+                  term,
+                  interestRate,
+                  DISPLAY_MONTHS_NAMES_RUS
+                );
 
-            setMonthNumberResult(months);
-            setOverpayment(round(overpayment, 2));
-            setMonthlyPaymentResult(round(calculateFromTermResult, 2));
-          } else {
-            const calculatedDiffPaymentTypeResult: Array<DiffTableRawContent> = calculateDiffPayments(
-              sum,
-              term,
-              interestRate,
-              DISPLAY_MONTHS_NAMES_RUS
-            );
+                setDiffPaymentResult(calculatedDiffPaymentTypeResult);
+              }
+            } else {
+              const { months, overpayment } = calculateFromMonthlyPayment(
+                sum,
+                monthlyPayment,
+                [{ interestRate, startMonth: 1 }],
+                true
+              );
 
-            setDiffPaymentResult(calculatedDiffPaymentTypeResult);
-          }
-        }}
-      >
-        Рассчитать
-      </Button>
-      {paymentType === PaymentType.Annuity ? (
-        <AnnuityResult
-          data={{
-            monthlyPaymentResult,
-            monthNumberResult,
-            overpayment,
+              setMonthNumberResult(months);
+              setOverpayment(round(overpayment, 2));
+            }
           }}
-        />
-      ) : diffPaymentTypeResult.length ? (
-        <DiffResult data={diffPaymentTypeResult} />
-      ) : (
-        " "
-      )}
+        >
+          Рассчитать
+        </Button>
+      </section>
+      <section>
+        {selectedTab === DISPLAY_NAMES_RUS.BY_CREDIT_AMOUNT ? (
+          paymentType === PaymentType.Annuity ? (
+            <AnnuityResult
+              data={{
+                monthlyPaymentResult,
+              }}
+            />
+          ) : diffPaymentTypeResult.length ? (
+            <DiffResult data={diffPaymentTypeResult} />
+          ) : (
+            " "
+          )
+        ) : (
+          <ByPaymentResult
+            data={{
+              monthNumberResult,
+              overpayment,
+            }}
+          />
+        )}
+      </section>
     </div>
   );
 };

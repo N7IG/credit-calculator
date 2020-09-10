@@ -31,6 +31,7 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
       }}
     />
     <RadioGroup
+      color="secondary"
       aria-label="payment_type"
       defaultValue={PaymentType.Annuity}
       onChange={(event) => {
@@ -39,12 +40,12 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
     >
       <FormControlLabel
         value={PaymentType.Annuity}
-        control={<Radio />}
+        control={<Radio color="primary" />}
         label={DISPLAY_NAMES_RUS.ANNUITY_RADIO}
       />
       <FormControlLabel
         value={PaymentType.Differential}
-        control={<Radio />}
+        control={<Radio color="primary" />}
         label={DISPLAY_NAMES_RUS.DIFF_RADIO}
       />
     </RadioGroup>
