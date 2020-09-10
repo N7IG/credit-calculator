@@ -1,3 +1,7 @@
+$primary-color: #3f51b5;
+$shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+
 .tableContainer {
   margin: 1rem auto;
 }
@@ -9,6 +13,23 @@
   margin: 1rem 0;
 }
 
-thead {
-  background-color: #e8e8e8;
+.expandIcon {
+  color: $primary-color;
+}
+
+.resultDetails {
+  box-shadow: $shadow !important;
+}
+
+.paymentDetailsExpanded {
+  max-height: 500px !important;
+}
+
+.tableRowFooter td {
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  position: sticky;
+  background-color: #fafafa;
+  border-top: 1px solid rgba(224, 224, 224, 1);
 }

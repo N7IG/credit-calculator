@@ -28,7 +28,7 @@ export function DiffResult(props: DiffTableResultContent) {
           {DISPLAY_NAMES_RUS.FIRST_PAYMENT}:{" "}
           <span>
             <NumberFormat
-              value={props.data[0].paymentAmount}
+              value={props.data[1].paymentAmount}
               thousandSeparator={" "}
               decimalScale={2}
               displayType={"text"}
@@ -51,49 +51,52 @@ export function DiffResult(props: DiffTableResultContent) {
           </span>
         </div>
       </div>
-      <Accordion>
+      <Accordion square={true} className={classes.resultDetails}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}
           aria-controls="payment-details"
           id="payment-details"
         >
           <div>{DISPLAY_NAMES_RUS.DETAILS}</div>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.paymentDetailsExpanded}>
           <TableContainer component={Paper}>
-            <Table>
+            <Table stickyHeader>
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <b>{DISPLAY_NAMES_RUS.ORDER_PAYMENT_NUMBER}</b>
+                    <b>{DISPLAY_NAMES_RUS.PAYMENT_FOR_PERIOD}</b>
                   </TableCell>
                   <TableCell>
-                    <b>{DISPLAY_NAMES_RUS.PEYMENT_FOR_PERIOD}</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>{DISPLAY_NAMES_RUS.BASIC_DEBT_PERIOD_PAYMENT}</b>
+                    <b>{DISPLAY_NAMES_RUS.TOTAL_PERIOD_PAYMENT}</b>
                   </TableCell>
                   <TableCell>
                     <b>{DISPLAY_NAMES_RUS.PERCENTAGE_PERIOD_PAYMENT}</b>
                   </TableCell>
                   <TableCell>
-                    <b>{DISPLAY_NAMES_RUS.TOTAL_PERIOD_PAYMENT}</b>
+                    <b>{DISPLAY_NAMES_RUS.BASIC_DEBT_PERIOD_PAYMENT}</b>
+                  </TableCell>
+                  <TableCell>
+                    <b>{DISPLAY_NAMES_RUS.PAYMENT_LEFT}</b>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {props.data.map((row: DiffTableRawContent, index: number) => (
-                  <TableRow key={index}>
+                  <TableRow key={index} hover={true}>
                     <TableCell component="th" scope="row">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell>
-                      {row.paymentPeriod.month}, {row.paymentPeriod.year}
+                      {index
+                        ? index + " " + DISPLAY_NAMES_RUS.PAYMENT
+                        : DISPLAY_NAMES_RUS.PAYMENT_ISSUE}
+                      <br />
+                      <small>
+                        {row.paymentPeriod.month}, {row.paymentPeriod.year}
+                      </small>
                     </TableCell>
                     <TableCell>
                       {
                         <NumberFormat
-                          value={row.amountOfDebt}
+                          value={row.paymentAmount}
                           thousandSeparator={" "}
                           decimalScale={2}
                           displayType={"text"}
@@ -113,7 +116,17 @@ export function DiffResult(props: DiffTableResultContent) {
                     <TableCell>
                       {
                         <NumberFormat
-                          value={row.paymentAmount}
+                          value={row.amountOfDebt}
+                          thousandSeparator={" "}
+                          decimalScale={2}
+                          displayType={"text"}
+                        />
+                      }
+                    </TableCell>
+                    <TableCell>
+                      {
+                        <NumberFormat
+                          value={row.leftDebtAmount}
                           thousandSeparator={" "}
                           decimalScale={2}
                           displayType={"text"}
@@ -123,6 +136,70 @@ export function DiffResult(props: DiffTableResultContent) {
                   </TableRow>
                 ))}
               </TableBody>
+              <TableRow className={classes.tableRowFooter}>
+                <TableCell>
+                  <b>{DISPLAY_NAMES_RUS.SUMMARIZE}</b>
+                </TableCell>
+
+                <TableCell>
+                  {
+                    <b>
+                      <NumberFormat
+                        value={props.data.reduce((acc, curr) => {
+                          return acc + curr.paymentAmount;
+                        }, 0)}
+                        thousandSeparator={" "}
+                        decimalScale={2}
+                        displayType={"text"}
+                        style={{ fontWeight: "bold" }}
+                      />
+                    </b>
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    <b>
+                      <NumberFormat
+                        value={props.data.reduce((acc, curr) => {
+                          return acc + curr.amountOfPercentage;
+                        }, 0)}
+                        thousandSeparator={" "}
+                        decimalScale={2}
+                        displayType={"text"}
+                        style={{ fontWeight: "bold" }}
+                      />
+                    </b>
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    <b>
+                      <NumberFormat
+                        value={props.data.reduce((acc, curr) => {
+                          return acc + curr.amountOfDebt;
+                        }, 0)}
+                        thousandSeparator={" "}
+                        decimalScale={2}
+                        displayType={"text"}
+                        style={{ fontWeight: "bold" }}
+                      />
+                    </b>
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    <b>
+                      <NumberFormat
+                        value={props.data.slice(-1)[0].leftDebtAmount}
+                        thousandSeparator={" "}
+                        decimalScale={2}
+                        displayType={"text"}
+                        style={{ fontWeight: "bold" }}
+                      />
+                    </b>
+                  }
+                </TableCell>
+              </TableRow>
             </Table>
           </TableContainer>
         </AccordionDetails>

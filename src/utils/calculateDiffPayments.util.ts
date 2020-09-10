@@ -13,6 +13,16 @@ export function calculateDiffPayments(
   let currentMonth: number = currentDay.getMonth();
   let currentYear: number = currentDay.getFullYear();
 
+  finalResult.push({
+    paymentPeriod: { month: monthsArray[currentMonth], year: currentYear },
+    paymentAmount: 0,
+    amountOfDebt: 0,
+    amountOfPercentage: 0,
+    leftDebtAmount: totalBasicDept,
+  });
+
+  currentMonth++;
+
   for (let i = 0; i < monthsToPay; i++) {
     let daysInCurrentMonth = new Date(
       currentYear,
@@ -35,6 +45,7 @@ export function calculateDiffPayments(
         Math.round((basicDebtPeymentPerMonth + Number.EPSILON) * 100) / 100,
       amountOfPercentage:
         Math.round((percentagePayment + Number.EPSILON) * 100) / 100,
+      leftDebtAmount: totalBasicDept,
     });
 
     currentMonth++;

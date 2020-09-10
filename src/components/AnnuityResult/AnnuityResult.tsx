@@ -22,30 +22,6 @@ export function AnnuityResult(props: AnnuityDataPropsResult) {
           />
         </span>
       </div>
-      <div>
-        {DISPLAY_NAMES_RUS.CALCULATED_PAYMENT_PERIOD}:{" "}
-        <span>
-          <NumberFormat
-            value={props.data.monthNumberResult}
-            thousandSeparator={" "}
-            decimalScale={0}
-            displayType={"text"}
-            style={{ fontWeight: "bold" }}
-          />
-        </span>{" "}
-        {DISPLAY_NAMES_RUS.MONTHS}
-        <br />
-        {DISPLAY_NAMES_RUS.CALCULATED_OVERPAYMENT}:{" "}
-        <span>
-          <NumberFormat
-            value={props.data.overpayment}
-            thousandSeparator={" "}
-            decimalScale={2}
-            displayType={"text"}
-            style={{ fontWeight: "bold" }}
-          />
-        </span>
-      </div>
     </div>
   );
 }

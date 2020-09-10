@@ -10,4 +10,5 @@ export interface DiffTableRawContent {
   paymentAmount: number;
   amountOfDebt: number;
   amountOfPercentage: number;
+  leftDebtAmount: number;
 }
