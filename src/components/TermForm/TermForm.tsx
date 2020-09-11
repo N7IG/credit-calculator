@@ -5,6 +5,7 @@ import NumberFormat from "react-number-format";
 import { DISPLAY_NAMES_RUS } from "./display-names";
 import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 import { PaymentType } from "../../models";
+import classes from "./TermForm.module.scss";
 
 interface TermFormProps {
   handleTermChange: Function;
@@ -30,24 +31,27 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
         handleTermChange(value);
       }}
     />
-    <RadioGroup
-      color="secondary"
-      aria-label="payment_type"
-      defaultValue={PaymentType.Annuity}
-      onChange={(event) => {
-        handlePaymentTypeChange(event.target.value);
-      }}
-    >
-      <FormControlLabel
-        value={PaymentType.Annuity}
-        control={<Radio color="primary" />}
-        label={DISPLAY_NAMES_RUS.ANNUITY_RADIO}
-      />
-      <FormControlLabel
-        value={PaymentType.Differential}
-        control={<Radio color="primary" />}
-        label={DISPLAY_NAMES_RUS.DIFF_RADIO}
-      />
-    </RadioGroup>
+    <div className={classes.paymentType}>
+      <label className={classes.paymentTypeTitle}>Порядок погашения</label>
+      <RadioGroup
+        color="secondary"
+        aria-label="payment_type"
+        defaultValue={PaymentType.Annuity}
+        onChange={(event) => {
+          handlePaymentTypeChange(event.target.value);
+        }}
+      >
+        <FormControlLabel
+          value={PaymentType.Annuity}
+          control={<Radio color="primary" />}
+          label={DISPLAY_NAMES_RUS.ANNUITY_RADIO}
+        />
+        <FormControlLabel
+          value={PaymentType.Differential}
+          control={<Radio color="primary" />}
+          label={DISPLAY_NAMES_RUS.DIFF_RADIO}
+        />
+      </RadioGroup>
+    </div>
   </div>
 );
