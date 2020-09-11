@@ -45,6 +45,9 @@ export const App = () => {
     DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD
   );
   const [showResults, setShowResults] = React.useState(false);
+  const [showPercentageOptions, setShowPercentageOptions] = React.useState(
+    false
+  );
 
   const handleSumChange = (value: string) => {
     setSum(Number(value));
@@ -79,6 +82,10 @@ export const App = () => {
     setMonthNumberResult(0);
     setOverpayment(0);
     setShowResults(false);
+  };
+
+  const handleShowPercentageOption = (value: boolean) => {
+    setShowPercentageOptions(value);
   };
 
   return (
@@ -116,6 +123,7 @@ export const App = () => {
             <TermForm
               handleTermChange={handleTermChange}
               handlePaymentTypeChange={handlePaymentTypeChange}
+              handleShowPercentageOption={handleShowPercentageOption}
             />
           </TabPanel>
           <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}>
@@ -129,6 +137,19 @@ export const App = () => {
           </TabPanel>
         </TabContext>
         <hr />
+        {showPercentageOptions ? (
+          <div>
+            <div className={classes.additionalForm}>
+              <span>Дополниетльные параметры</span>
+              <PaymentForm
+                handleMonthlyPaymentChange={handleMonthlyPaymentChange}
+              />
+            </div>
+            <hr />
+          </div>
+        ) : (
+          ""
+        )}
         <Button
           className={classes.resultButton}
           color="primary"
