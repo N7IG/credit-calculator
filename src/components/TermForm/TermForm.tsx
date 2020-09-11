@@ -32,7 +32,9 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
       }}
     />
     <div className={classes.paymentType}>
-      <label className={classes.paymentTypeTitle}>Порядок погашения</label>
+      <label className={classes.paymentTypeTitle}>
+        {DISPLAY_NAMES_RUS.PAYMENT_TYPE_LABEL}
+      </label>
       <RadioGroup
         color="secondary"
         aria-label="payment_type"
