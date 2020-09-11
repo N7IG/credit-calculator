@@ -5,6 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TableFooter from "@material-ui/core/TableFooter";
 import Paper from "@material-ui/core/Paper";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -137,70 +138,72 @@ export function DiffResult(props: DiffTableResultContent) {
                   </TableRow>
                 ))}
               </TableBody>
-              <TableRow className={classes.tableRowFooter}>
-                <TableCell>
-                  <b>{DISPLAY_NAMES_RUS.SUMMARIZE}</b>
-                </TableCell>
+              <TableFooter>
+                <TableRow className={classes.tableRowFooter}>
+                  <TableCell>
+                    <b>{DISPLAY_NAMES_RUS.SUMMARIZE}</b>
+                  </TableCell>
 
-                <TableCell>
-                  {
-                    <b>
-                      <NumberFormat
-                        value={props.data.reduce((acc, curr) => {
-                          return acc + curr.paymentAmount;
-                        }, 0)}
-                        thousandSeparator={" "}
-                        decimalScale={2}
-                        displayType={"text"}
-                        style={{ fontWeight: "bold" }}
-                      />
-                    </b>
-                  }
-                </TableCell>
-                <TableCell>
-                  {
-                    <b>
-                      <NumberFormat
-                        value={props.data.reduce((acc, curr) => {
-                          return acc + curr.amountOfPercentage;
-                        }, 0)}
-                        thousandSeparator={" "}
-                        decimalScale={2}
-                        displayType={"text"}
-                        style={{ fontWeight: "bold" }}
-                      />
-                    </b>
-                  }
-                </TableCell>
-                <TableCell>
-                  {
-                    <b>
-                      <NumberFormat
-                        value={props.data.reduce((acc, curr) => {
-                          return acc + curr.amountOfDebt;
-                        }, 0)}
-                        thousandSeparator={" "}
-                        decimalScale={2}
-                        displayType={"text"}
-                        style={{ fontWeight: "bold" }}
-                      />
-                    </b>
-                  }
-                </TableCell>
-                <TableCell>
-                  {
-                    <b>
-                      <NumberFormat
-                        value={props.data.slice(-1)[0].leftDebtAmount}
-                        thousandSeparator={" "}
-                        decimalScale={2}
-                        displayType={"text"}
-                        style={{ fontWeight: "bold" }}
-                      />
-                    </b>
-                  }
-                </TableCell>
-              </TableRow>
+                  <TableCell>
+                    {
+                      <b>
+                        <NumberFormat
+                          value={props.data.reduce((acc, curr) => {
+                            return acc + curr.paymentAmount;
+                          }, 0)}
+                          thousandSeparator={" "}
+                          decimalScale={2}
+                          displayType={"text"}
+                          style={{ fontWeight: "bold" }}
+                        />
+                      </b>
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      <b>
+                        <NumberFormat
+                          value={props.data.reduce((acc, curr) => {
+                            return acc + curr.amountOfPercentage;
+                          }, 0)}
+                          thousandSeparator={" "}
+                          decimalScale={2}
+                          displayType={"text"}
+                          style={{ fontWeight: "bold" }}
+                        />
+                      </b>
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      <b>
+                        <NumberFormat
+                          value={props.data.reduce((acc, curr) => {
+                            return acc + curr.amountOfDebt;
+                          }, 0)}
+                          thousandSeparator={" "}
+                          decimalScale={2}
+                          displayType={"text"}
+                          style={{ fontWeight: "bold" }}
+                        />
+                      </b>
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      <b>
+                        <NumberFormat
+                          value={props.data.slice(-1)[0].leftDebtAmount}
+                          thousandSeparator={" "}
+                          decimalScale={2}
+                          displayType={"text"}
+                          style={{ fontWeight: "bold" }}
+                        />
+                      </b>
+                    }
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
             </Table>
           </TableContainer>
         </AccordionDetails>

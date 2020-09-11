@@ -64,6 +64,7 @@ export const App = () => {
 
   const handlePaymentTypeChange = (value: PaymentType) => {
     setPaymentType(value);
+    setShowResults(false);
   };
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newTab: string) => {
@@ -171,7 +172,8 @@ export const App = () => {
       </section>
       <section>
         {showResults ? (
-          selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD ? (
+          selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD ||
+          diffPaymentTypeResult.length ? (
             paymentType === PaymentType.Annuity ? (
               <AnnuityResult
                 data={{
