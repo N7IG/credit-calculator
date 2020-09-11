@@ -10,6 +10,7 @@ import { DISPLAY_NAMES_RUS } from "./display-names";
 export function ByPaymentResult(props: ByPaymentDataResult) {
   return (
     <div className={classes.resultsContainer}>
+      <h2>{DISPLAY_NAMES_RUS.CALCULATION_RESULT}</h2>
       <div>
         {DISPLAY_NAMES_RUS.CALCULATED_PAYMENT_PERIOD}:{" "}
         <span>

@@ -10,4 +10,5 @@ export const DISPLAY_NAMES_RUS = {
   OVERPAYMENT: "Переплата",
   DETAILS: "Детализация платежей",
   SUMMARIZE: "Всего выплат",
+  CALCULATION_RESULT: "Результат расчета",
 };

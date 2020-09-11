@@ -24,6 +24,7 @@ export function DiffResult(props: DiffTableResultContent) {
   return (
     <div>
       <div className={classes.basicResultContainer}>
+        <h2>{DISPLAY_NAMES_RUS.CALCULATION_RESULT}</h2>
         <div>
           {DISPLAY_NAMES_RUS.FIRST_PAYMENT}:{" "}
           <span>

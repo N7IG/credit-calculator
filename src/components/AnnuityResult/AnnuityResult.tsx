@@ -10,6 +10,7 @@ import { DISPLAY_NAMES_RUS } from "./display-names";
 export function AnnuityResult(props: AnnuityDataPropsResult) {
   return (
     <div className={classes.resultsContainer}>
+      <h2>{DISPLAY_NAMES_RUS.CALCULATION_RESULT}</h2>
       <div>
         {DISPLAY_NAMES_RUS.MONTH_PAYMENT}:{" "}
         <span>

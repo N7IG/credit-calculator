@@ -41,10 +41,10 @@ export const App = () => {
   const [diffPaymentTypeResult, setDiffPaymentResult] = useState<
     Array<DiffTableRawContent>
   >([]);
-
   const [selectedTab, setSelectedTab] = React.useState(
     DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD
   );
+  const [showResults, setShowResults] = React.useState(false);
 
   const handleSumChange = (value: string) => {
     setSum(Number(value));
@@ -77,6 +77,7 @@ export const App = () => {
     setMonthlyPaymentResult(0);
     setMonthNumberResult(0);
     setOverpayment(0);
+    setShowResults(false);
   };
 
   return (
@@ -132,6 +133,7 @@ export const App = () => {
           color="primary"
           variant="outlined"
           onClick={() => {
+            setShowResults(true);
             if (selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD) {
               if (paymentType === PaymentType.Annuity) {
                 const calculateFromTermResult: number = calculateFromTerm(
@@ -168,25 +170,27 @@ export const App = () => {
         </Button>
       </section>
       <section>
-        {selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD ? (
-          paymentType === PaymentType.Annuity ? (
-            <AnnuityResult
+        {showResults ? (
+          selectedTab === DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD ? (
+            paymentType === PaymentType.Annuity ? (
+              <AnnuityResult
+                data={{
+                  monthlyPaymentResult,
+                }}
+              />
+            ) : (
+              <DiffResult data={diffPaymentTypeResult} />
+            )
+          ) : (
+            <ByPaymentResult
               data={{
-                monthlyPaymentResult,
+                monthNumberResult,
+                overpayment,
               }}
             />
-          ) : diffPaymentTypeResult.length ? (
-            <DiffResult data={diffPaymentTypeResult} />
-          ) : (
-            " "
           )
         ) : (
-          <ByPaymentResult
-            data={{
-              monthNumberResult,
-              overpayment,
-            }}
-          />
+          " "
         )}
       </section>
     </div>
