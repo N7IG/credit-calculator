@@ -56,8 +56,6 @@ export const App = () => {
   };
 
   const handleInterestRateChange = (value: InterestRate[]) => {
-    console.log("HIC", value);
-
     setInterestRates(value);
   };
 
@@ -150,8 +148,6 @@ export const App = () => {
                   interestRates,
                   term
                 );
-
-                console.log("MPR", calculateFromTermResult);
 
                 setMonthlyPaymentResult(
                   calculateFromTermResult.map((payment) => round(payment, 2))

@@ -72,7 +72,6 @@ export const ConstForm: FunctionComponent<ConstFormProps> = ({
                 startMonth: 12 * index + 1,
               };
               handleInterestRateChange(rates.map((rate) => rate.rate));
-              console.log("cc", JSON.stringify(rates));
             }}
           />
           {element.id === "1" ? (
