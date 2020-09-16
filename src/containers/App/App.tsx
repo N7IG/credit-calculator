@@ -1,7 +1,7 @@
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Tab from "@material-ui/core/Tab";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
@@ -14,6 +14,7 @@ import {
   DiffResult,
   PaymentForm,
   TermForm,
+  Header,
 } from "../../components";
 import { ByPaymentResult } from "../../components/ByPaymentResult";
 import {
@@ -72,12 +73,7 @@ export const App = () => {
 
   return (
     <div className={classes.app}>
-      <section className={classes.header}>
-        <div className={classes.dollarIcon}>
-          <AttachMoneyIcon />
-        </div>
-        <h1>{DISPLAY_NAMES_RUS.APP_NAME}</h1>
-      </section>
+      <Header />
       <section className={classes.form}>
         <TabContext value={selectedTab}>
           <AppBar position="static">
