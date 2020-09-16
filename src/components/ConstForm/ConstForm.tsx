@@ -41,7 +41,7 @@ export const ConstForm: FunctionComponent<ConstFormProps> = ({
         decimalScale={2}
         onValueChange={(values) => {
           const { value } = values;
-          handleSumChange(value);
+          handleSumChange(Number(value));
         }}
       />
       {rates.map((element, index) => (
