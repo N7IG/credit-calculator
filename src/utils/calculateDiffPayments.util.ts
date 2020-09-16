@@ -1,9 +1,10 @@
-import { DiffTableRawContent } from "../models/index";
+import { DiffTableRawContent, InterestRate } from "../models/index";
+import { getYearInterestRate } from "./getYearInterestRate.util";
 
 export function calculateDiffPayments(
   sum: number,
   monthsToPay: number,
-  percentage: number,
+  interestRates: Array<InterestRate>,
   monthsArray: string[]
 ): Array<DiffTableRawContent> {
   const finalResult: Array<DiffTableRawContent> = [];
@@ -29,6 +30,7 @@ export function calculateDiffPayments(
       currentMonth + 1,
       0
     ).getDate();
+    let percentage = getYearInterestRate(i + 1, interestRates);
     let currentMonthPercentageCoeff =
       ((percentage / 100) * daysInCurrentMonth) / 365;
     let percentagePayment = totalBasicDept * currentMonthPercentageCoeff;
