@@ -1,6 +1,3 @@
-import round from "lodash/round";
-import React, { useState } from "react";
-
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Tab from "@material-ui/core/Tab";
@@ -8,6 +5,8 @@ import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
+import round from "lodash/round";
+import React, { useState } from "react";
 
 import {
   AnnuityResult,

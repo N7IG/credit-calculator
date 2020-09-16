@@ -28,7 +28,7 @@ export const TermForm: FunctionComponent<TermFormProps> = ({
       decimalScale={0}
       onValueChange={(values) => {
         const { value } = values;
-        handleTermChange(value);
+        handleTermChange(Number(value));
       }}
     />
     <div className={classes.paymentType}>

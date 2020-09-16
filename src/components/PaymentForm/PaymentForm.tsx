@@ -23,7 +23,7 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = ({
       decimalScale={2}
       onValueChange={(values) => {
         const { value } = values;
-        handleMonthlyPaymentChange(value);
+        handleMonthlyPaymentChange(Number(value));
       }}
     />
   </div>
