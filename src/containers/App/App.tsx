@@ -50,22 +50,6 @@ export const App = () => {
   );
   const [showResults, setShowResults] = React.useState(false);
 
-  const handleSumChange = (value: string) => {
-    setSum(Number(value));
-  };
-
-  const handleInterestRateChange = (value: InterestRate[]) => {
-    setInterestRates(value);
-  };
-
-  const handleMonthlyPaymentChange = (value: string) => {
-    setMonthlyPayment(Number(value));
-  };
-
-  const handleTermChange = (value: string) => {
-    setTerm(Number(value));
-  };
-
   const handlePaymentTypeChange = (value: PaymentType) => {
     setPaymentType(value);
     setShowResults(false);
@@ -108,29 +92,27 @@ export const App = () => {
                 value={DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD}
               />
               <Tab
-                label={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}
-                value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}
+                label={DISPLAY_NAMES_RUS.BY_PAYMENT_AMOUNT}
+                value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMOUNT}
               />
             </TabList>
           </AppBar>
           <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_PERIOD}>
             <ConstForm
-              handleSumChange={handleSumChange}
-              handleInterestRateChange={handleInterestRateChange}
+              handleSumChange={setSum}
+              handleInterestRateChange={setInterestRates}
             />
             <TermForm
-              handleTermChange={handleTermChange}
+              handleTermChange={setTerm}
               handlePaymentTypeChange={handlePaymentTypeChange}
             />
           </TabPanel>
-          <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMMOUT}>
+          <TabPanel value={DISPLAY_NAMES_RUS.BY_PAYMENT_AMOUNT}>
             <ConstForm
-              handleSumChange={handleSumChange}
-              handleInterestRateChange={handleInterestRateChange}
+              handleSumChange={setSum}
+              handleInterestRateChange={setInterestRates}
             />
-            <PaymentForm
-              handleMonthlyPaymentChange={handleMonthlyPaymentChange}
-            />
+            <PaymentForm handleMonthlyPaymentChange={setMonthlyPayment} />
           </TabPanel>
         </TabContext>
         <hr />
