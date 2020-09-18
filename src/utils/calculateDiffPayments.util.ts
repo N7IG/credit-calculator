@@ -9,7 +9,13 @@ export function calculateDiffPayments(
 ): Array<DiffTableRawContent> {
   const finalResult: Array<DiffTableRawContent> = [];
   let totalBasicDept: number = sum;
-  const basicDebtPeymentPerMonth: number = sum / monthsToPay;
+  let basicDebtPaymentPerMonth: number;
+  const basicDebtPaymentPerEachMonth: number = Number(
+    (sum / monthsToPay).toFixed(2)
+  );
+  const basicDebtPaymentForLastMonth: number = Number(
+    (sum - basicDebtPaymentPerEachMonth * (monthsToPay - 1)).toFixed(2)
+  );
   const currentDay: Date = new Date();
   let currentMonth: number = currentDay.getMonth();
   let currentYear: number = currentDay.getFullYear();
@@ -25,6 +31,12 @@ export function calculateDiffPayments(
   currentMonth++;
 
   for (let i = 0; i < monthsToPay; i++) {
+    if (i < monthsToPay - 1) {
+      basicDebtPaymentPerMonth = basicDebtPaymentPerEachMonth;
+    } else {
+      basicDebtPaymentPerMonth = basicDebtPaymentForLastMonth;
+    }
+
     let daysInCurrentMonth = new Date(
       currentYear,
       currentMonth + 1,
@@ -35,19 +47,18 @@ export function calculateDiffPayments(
       ((percentage / 100) * daysInCurrentMonth) / 365;
     let percentagePayment = totalBasicDept * currentMonthPercentageCoeff;
 
-    totalBasicDept -= basicDebtPeymentPerMonth;
-
+    totalBasicDept -= basicDebtPaymentPerMonth;
     finalResult.push({
       paymentPeriod: { month: monthsArray[currentMonth], year: currentYear },
       paymentAmount:
         Math.round(
-          (basicDebtPeymentPerMonth + percentagePayment + Number.EPSILON) * 100
+          (basicDebtPaymentPerMonth + percentagePayment + Number.EPSILON) * 100
         ) / 100,
       amountOfDebt:
-        Math.round((basicDebtPeymentPerMonth + Number.EPSILON) * 100) / 100,
+        Math.round((basicDebtPaymentPerMonth + Number.EPSILON) * 100) / 100,
       amountOfPercentage:
         Math.round((percentagePayment + Number.EPSILON) * 100) / 100,
-      leftDebtAmount: totalBasicDept,
+      leftDebtAmount: Math.round((totalBasicDept + Number.EPSILON) * 100) / 100,
     });
 
     currentMonth++;
@@ -56,6 +67,5 @@ export function calculateDiffPayments(
       currentMonth -= 12;
     }
   }
-
   return finalResult;
 }
