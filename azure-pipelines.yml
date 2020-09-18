@@ -1,0 +1,25 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- checkout: self
+  persistCredentials: true
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    git config user.email "okuneva_natasha@mail.ru" 
+    git config user.name "Okuneva Natalya"
+    npm install
+    npm run deploy -- -r https://$(github_pat)@github.com/N7IG/credit-calculator
+  displayName: 'npm install and build'
