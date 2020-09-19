@@ -1,0 +1,19 @@
+.form {
+  display: grid;
+  margin: 1rem 0;
+  background-color: $white-color;
+  position: relative;
+  box-shadow: $shadow;
+}
+
+.resultButton {
+  width: fit-content;
+  margin: 1rem auto !important;
+}
+
+.tabHeader {
+  background-color: $white-color;
+  color: initial;
+  display: flex;
+  justify-content: space-around;
+}
